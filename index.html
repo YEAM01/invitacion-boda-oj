@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Osiris & Jesús | Nos casamos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Caveat:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crema:#faf6ef;
+    --crema2:#f2ead9;
+    --dorado:#b08d57;
+    --dorado-claro:#d9c7a3;
+    --cafe:#4a3f35;
+    --cafe-suave:#8a7b6c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#e9e2d3;
+    font-family:'Poppins',sans-serif;
+    color:var(--cafe);
+    display:flex;
+    justify-content:center;
+  }
+  #app{
+    max-width:480px;
+    width:100%;
+    min-height:100vh;
+    background:var(--crema);
+    position:relative;
+    overflow-x:hidden;
+    box-shadow:0 0 40px rgba(0,0,0,.15);
+  }
+  .oculto{display:none !important;}
+
+  /* ===== SOBRE / PORTADA PERSONALIZADA ===== */
+  #sobre-screen{
+    position:fixed;
+    inset:0;
+    max-width:480px;
+    margin:0 auto;
+    background:linear-gradient(160deg,#efe6d3,#e3d6b8);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    transition:transform 1s cubic-bezier(.77,0,.18,1), opacity 1s ease;
+    padding:24px;
+    text-align:center;
+  }
+  #sobre-screen.abierto{
+    transform:translateY(-100%);
+    opacity:0;
+    pointer-events:none;
+  }
+  .sobre{
+    position:relative;
+    width:260px;
+    height:180px;
+    margin-bottom:28px;
+  }
+  .sobre-cuerpo{
+    position:absolute;
+    inset:0;
+    background:#fffdf8;
+    border:1px solid var(--dorado-claro);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+  }
+  .sobre-solapa{
+    position:absolute;
+    top:0;left:0;right:0;
+    height:0;
+    border-left:130px solid transparent;
+    border-right:130px solid transparent;
+    border-top:95px solid #f3ecdd;
+    transform-origin:top;
+    transition:transform 1.1s ease;
+    z-index:3;
+  }
+  #sobre-screen.abierto .sobre-solapa{
+    transform:rotateX(180deg);
+  }
+  .sello{
+    position:absolute;
+    top:60px;left:50%;
+    transform:translateX(-50%);
+    width:58px;height:58px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #e3c583, var(--dorado) 70%);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:1px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    z-index:5;
+    border:2px solid #fff8ea;
+    animation:pulso 2.2s infinite;
+  }
+  @keyframes pulso{
+    0%,100%{box-shadow:0 4px 10px rgba(0,0,0,.35);}
+    50%{box-shadow:0 4px 18px rgba(176,141,87,.65);}
+  }
+  .sello small{
+    position:absolute;
+    bottom:-26px;
+    font-family:'Poppins',sans-serif;
+    font-size:9px;
+    font-weight:400;
+    color:var(--cafe-suave);
+    white-space:nowrap;
+    letter-spacing:.5px;
+  }
+  #sobre-familia{
+    font-family:'Playfair Display',serif;
+    font-size:22px;
+    color:var(--cafe);
+    margin-bottom:6px;
+  }
+  #sobre-cupos{
+    font-size:13px;
+    color:var(--cafe-suave);
+    letter-spacing:.5px;
+  }
+  .sobre-titulo{
+    font-family:'Caveat',cursive;
+    font-size:30px;
+    color:var(--dorado);
+    margin-top:18px;
+  }
+
+  /* ===== CONTENIDO PRINCIPAL ===== */
+  main{
+    display:flex;
+    flex-direction:column;
+  }
+  section{
+    padding:60px 28px;
+    text-align:center;
+    position:relative;
+  }
+  .divisor{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:var(--dorado);
+    font-size:14px;
+    margin:0 auto 28px;
+  }
+  .divisor::before,.divisor::after{
+    content:"";
+    height:1px;
+    width:60px;
+    background:var(--dorado-claro);
+  }
+  h2.script{
+    font-family:'Caveat',cursive;
+    font-size:44px;
+    color:var(--dorado);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  h3.subtitulo{
+    font-family:'Playfair Display',serif;
+    font-size:20px;
+    letter-spacing:1px;
+    margin-bottom:18px;
+  }
+  p{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--cafe-suave);
+  }
+
+  /* Portada */
+  #portada{
+    padding:0;
+    height:100vh;
+    min-height:640px;
+    display:flex;
+    flex-direction:column;
+  }
+  .foto-slot{
+    position:relative;
+    background:var(--crema2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border:1px dashed var(--dorado-claro);
+  }
+  .foto-slot img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .foto-slot .ph-label{
+    font-size:11px;
+    color:var(--cafe-suave);
+    text-align:center;
+    padding:10px;
+    line-height:1.5;
+  }
+  #portada-foto{
+    flex:1;
+  }
+  .portada-nombres{
+    padding:26px 20px 34px;
+    text-align:center;
+  }
+  .portada-nombres .script{
+    font-family:'Caveat',cursive;
+    font-size:52px;
+    color:var(--dorado);
+  }
+  .portada-nombres .fecha-corta{
+    font-family:'Playfair Display',serif;
+    font-size:13px;
+    letter-spacing:3px;
+    color:var(--cafe-suave);
+    margin-top:6px;
+    text-transform:uppercase;
+  }
+
+  /* Musica */
+  #musica-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    margin:26px 0 6px;
+  }
+  #play-btn{
+    width:54px;height:54px;
+    border-radius:50%;
+    border:2px solid var(--dorado);
+    background:var(--crema);
+    color:var(--dorado);
+    font-size:18px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #musica-box span{
+    font-size:12px;
+    color:var(--cafe-suave);
+    font-style:italic;
+  }
+
+  /* Cuenta regresiva */
+  #cuenta-regresiva{
+    background:var(--crema2);
+  }
+  .fecha-grande{
+    font-family:'Caveat',cursive;
+    color:var(--dorado);
+    font-size:30px;
+    margin-bottom:22px;
+  }
+  .timer{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-bottom:8px;
+  }
+  .timer div{
+    background:#fff;
+    border:1px solid var(--dorado-claro);
+    border-radius:10px;
+    padding:12px 6px;
+    width:64px;
+  }
+  .timer .num{
+    font-family:'Playfair Display',serif;
+    font-size:24px;
+    font-weight:700;
+    color:var(--cafe);
+    display:block;
+  }
+  .timer .lbl{
+    font-size:10px;
+    letter-spacing:.5px;
+    color:var(--cafe-suave);
+    text-transform:uppercase;
+  }
+
+  /* Padres y padrinos */
+  .persona-icono{
+    font-size:34px;
+    margin-bottom:6px;
+  }
+  .grupo-padres{
+    margin-bottom:26px;
+  }
+  .grupo-padres h4{
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    color:var(--dorado);
+    margin-bottom:12px;
+  }
+  .grupo-padres p{
+    color:var(--cafe);
+    font-size:15px;
+    margin-bottom:2px;
+  }
+
+  /* Ubicacion */
+  .tarjeta-lugar{
+    margin-bottom:34px;
+  }
+  .tarjeta-lugar h4{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--cafe-suave);
+    margin-bottom:12px;
+  }
+  .foto-lugar{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:10px;
+    margin-bottom:14px;
+  }
+  .tarjeta-lugar .nombre-lugar{
+    font-family:'Playfair Display',serif;
+    font-size:19px;
+    margin-bottom:2px;
+  }
+  .tarjeta-lugar .direccion{
+    font-size:13px;
+    color:var(--cafe-suave);
+    margin-bottom:6px;
+  }
+  .tarjeta-lugar .hora{
+    font-family:'Playfair Display',serif;
+    font-size:17px;
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .btn-mapa{
+    display:inline-block;
+    border:1.5px solid var(--dorado);
+    color:var(--dorado);
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:2px;
+    padding:10px 26px;
+    border-radius:30px;
+    text-transform:uppercase;
+  }
+
+  /* Itinerario */
+  .itinerario-item{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    text-align:left;
+    padding-bottom:26px;
+    position:relative;
+  }
+  .itinerario-item:not(:last-child)::before{
+    content:"";
+    position:absolute;
+    left:23px;
+    top:46px;
+    bottom:0;
+    width:1px;
+    background:var(--dorado-claro);
+  }
+  .itinerario-icono{
+    width:48px;height:48px;
+    min-width:48px;
+    border-radius:50%;
+    background:var(--crema2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+  }
+  .itinerario-item .hora-it{
+    font-size:12px;
+    color:var(--dorado);
+    font-weight:600;
+    letter-spacing:1px;
+  }
+  .itinerario-item .desc-it{
+    font-size:15px;
+    color:var(--cafe);
+    margin-top:2px;
+  }
+
+  /* Vestimenta */
+  .colores-fila{
+    display:flex;
+    justify-content:center;
+    gap:50px;
+    margin-top:22px;
+  }
+  .color-col p{color:var(--cafe);font-size:13px;margin-bottom:8px;}
+  .swatch{
+    width:38px;height:38px;
+    border-radius:50%;
+    margin:0 auto 8px;
+    border:1px solid var(--dorado-claro);
+  }
+  .swatch.beige{background:#d8c6a0;}
+  .swatch.blanco{background:#fff;}
+  .no-color{font-size:11px;color:var(--cafe-suave);text-transform:uppercase;letter-spacing:1px;}
+
+  /* Regalos */
+  .regalo-emoji{font-size:40px;margin-bottom:14px;}
+  .tienda{
+    font-family:'Playfair Display',serif;
+    font-size:20px;
+    margin-top:16px;
+  }
+  .num-evento{
+    font-size:13px;
+    color:var(--cafe-suave);
+    margin-top:4px;
+  }
+
+  /* Consideraciones */
+  #consideraciones{background:var(--crema2);}
+  .destacado{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    letter-spacing:2px;
+    font-size:15px;
+    margin-bottom:14px;
+  }
+  .reglas p{
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    color:var(--dorado);
+    margin:10px 0;
+  }
+  .emoji-fiesta{font-size:30px;margin-top:14px;}
+
+  /* Cita + galeria */
+  .cita{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.6;
+    color:var(--cafe);
+    margin-bottom:8px;
+  }
+  .cita-ref{font-size:12px;color:var(--dorado);letter-spacing:1px;margin-bottom:26px;}
+  .galeria{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .galeria .foto-slot{
+    aspect-ratio:3/4;
+    border-radius:6px;
+  }
+
+  /* RSVP */
+  .btn-rsvp{
+    display:inline-block;
+    background:var(--dorado);
+    color:#fff;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:14px 34px;
+    border-radius:30px;
+    margin-top:10px;
+  }
+
+  /* Cierre */
+  #cierre{
+    background:var(--cafe);
+    color:#fff;
+    padding-bottom:40px;
+  }
+  #cierre p{color:#e5ddcd;}
+  #cierre .script{color:var(--dorado-claro);}
+  footer{
+    text-align:center;
+    font-size:10px;
+    color:#cfc4ae;
+    padding-bottom:22px;
+    letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ===================== SOBRE PERSONALIZADO ===================== -->
+  <div id="sobre-screen">
+    <div class="sobre-titulo">Save the date</div>
+    <div class="sobre">
+      <div class="sobre-cuerpo"></div>
+      <div class="sello" id="btn-sello">O&amp;J<small>Da click en el sello<br>para abrir</small></div>
+      <div class="sobre-solapa"></div>
+    </div>
+    <div id="sobre-familia">Estimados invitados</div>
+    <div id="sobre-cupos"></div>
+  </div>
+
+  <!-- ===================== CONTENIDO ===================== -->
+  <main>
+
+    <!-- Portada -->
+    <section id="portada">
+      <div class="foto-slot" id="portada-foto">
+        <span class="ph-label">Foto de portada<br>(assets/fotos/portada.jpg)</span>
+        <img src="assets/fotos/portada.jpg" alt="Osiris y Jesús" onerror="this.style.display='none'">
+      </div>
+      <div class="portada-nombres">
+        <div class="script">Osiris &amp; Jesús</div>
+        <div class="fecha-corta">11 · Noviembre · 2026</div>
+        <div id="musica-box">
+          <button id="play-btn" aria-label="Reproducir música">▶</button>
+          <span>Dale play a la música</span>
+        </div>
+        <audio id="bgMusic" loop>
+          <source src="assets/audio/musica.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </section>
+
+    <!-- Nos vamos a casar -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">¡Nos vamos a casar!</h2>
+      <p>Después de estos años caminando juntos hemos decidido unir nuestras vidas en matrimonio ante Dios, por lo que nos complace sean partícipes de este momento.</p>
+    </section>
+
+    <!-- Cuenta regresiva -->
+    <section id="cuenta-regresiva">
+      <h3 class="subtitulo">Aparta la fecha</h3>
+      <div class="fecha-grande">11 de Noviembre, 2026 · 7:00 pm</div>
+      <div class="timer">
+        <div><span class="num" id="t-dias">00</span><span class="lbl">Días</span></div>
+        <div><span class="num" id="t-horas">00</span><span class="lbl">Hrs</span></div>
+        <div><span class="num" id="t-min">00</span><span class="lbl">Min</span></div>
+        <div><span class="num" id="t-seg">00</span><span class="lbl">Seg</span></div>
+      </div>
+      <p>Faltan para nuestra boda</p>
+    </section>
+
+    <!-- Padres y padrinos -->
+    <section>
+      <div class="divisor">✦</div>
+      <h3 class="subtitulo">Con la bendición de Dios y nuestros padres</h3>
+
+      <div class="grupo-padres">
+        <h4>Padres de la novia</h4>
+        <div class="persona-icono">👰</div>
+        <p>Norma Angélica Arreola Medina</p>
+      </div>
+
+      <div class="grupo-padres">
+        <h4>Padres del novio</h4>
+        <div class="persona-icono">🤵</div>
+        <p>Héctor</p>
+        <p>Isabella</p>
+      </div>
+
+      <div class="grupo-padres">
+        <h4>Madrina de boda</h4>
+        <div class="persona-icono">💍</div>
+        <p>Esmeralda Arreola</p>
+      </div>
+    </section>
+
+    <!-- Ubicacion -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">Ubicación</h2>
+
+      <div class="tarjeta-lugar">
+        <h4>Ceremonia religiosa</h4>
+        <div class="foto-slot foto-lugar">
+          <span class="ph-label">Foto del jardín / iglesia<br>(assets/fotos/ceremonia.jpg)</span>
+          <img src="assets/fotos/ceremonia.jpg" alt="Ceremonia" onerror="this.style.display='none'">
+        </div>
+        <div class="nombre-lugar">Jardín Hacienda Figueroa</div>
+        <div class="direccion">Morelia, Mich. (dirección de ejemplo — actualizar)</div>
+        <div class="hora">5:30 pm</div>
+        <a class="btn-mapa" href="https://www.google.com/maps/search/?api=1&query=Jard%C3%ADn%20Hacienda%20Figueroa%20Morelia" target="_blank" rel="noopener">Ver mapa</a>
+      </div>
+
+      <div class="tarjeta-lugar">
+        <h4>Recepción</h4>
+        <div class="foto-slot foto-lugar">
+          <span class="ph-label">Foto del salón<br>(assets/fotos/recepcion.jpg)</span>
+          <img src="assets/fotos/recepcion.jpg" alt="Recepción" onerror="this.style.display='none'">
+        </div>
+        <div class="nombre-lugar">Salón Hacienda Figueroa</div>
+        <div class="direccion">Morelia, Mich. (dirección de ejemplo — actualizar)</div>
+        <div class="hora">7:00 pm</div>
+        <a class="btn-mapa" href="https://www.google.com/maps/search/?api=1&query=Sal%C3%B3n%20Hacienda%20Figueroa%20Morelia" target="_blank" rel="noopener">Ver mapa</a>
+      </div>
+
+      <p>No queremos que te pierdas ningún momento con nosotros, por eso agradecemos tu puntualidad.</p>
+    </section>
+
+    <!-- Itinerario -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">Itinerario</h2>
+      <div style="margin-top:30px;">
+        <div class="itinerario-item">
+          <div class="itinerario-icono">⛪</div>
+          <div><div class="hora-it">5:30 p.m.</div><div class="desc-it">Inicia la ceremonia religiosa</div></div>
+        </div>
+        <div class="itinerario-item">
+          <div class="itinerario-icono">📸</div>
+          <div><div class="hora-it">6:30 p.m.</div><div class="desc-it">Sesión de fotos con los novios</div></div>
+        </div>
+        <div class="itinerario-item">
+          <div class="itinerario-icono">🥂</div>
+          <div><div class="hora-it">7:00 p.m.</div><div class="desc-it">Cocktail de bienvenida</div></div>
+        </div>
+        <div class="itinerario-item">
+          <div class="itinerario-icono">🍽️</div>
+          <div><div class="hora-it">8:00 p.m.</div><div class="desc-it">Cena y brindis</div></div>
+        </div>
+        <div class="itinerario-item">
+          <div class="itinerario-icono">💃</div>
+          <div><div class="hora-it">9:00 p.m.</div><div class="desc-it">Primer baile de los esposos</div></div>
+        </div>
+        <div class="itinerario-item">
+          <div class="itinerario-icono">🪩</div>
+          <div><div class="hora-it">9:30 p.m.</div><div class="desc-it">¡Inicia la fiesta!</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vestimenta -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">Código de vestimenta</h2>
+      <p>¡Prepárense para una boda llena de colores!<br>Dejen el blanco para la novia y el beige para el novio.</p>
+      <div class="colores-fila">
+        <div class="color-col">
+          <p>Ellos:</p>
+          <div class="swatch beige"></div>
+          <div class="no-color">No beige</div>
+        </div>
+        <div class="color-col">
+          <p>Ellas:</p>
+          <div class="swatch blanco"></div>
+          <div class="no-color">No blanco</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mesa de regalos -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">Mesa de regalos</h2>
+      <div class="regalo-emoji">🎁</div>
+      <p>Su presencia es el mejor regalo que podemos recibir, sin embargo, si desean hacernos un obsequio adicional les dejamos algunas sugerencias y les agradecemos de antemano por su generosidad.</p>
+      <div class="tienda">Liverpool</div>
+      <div class="num-evento">No. de evento: (pendiente de agregar)</div>
+    </section>
+
+    <!-- Consideraciones -->
+    <section id="consideraciones">
+      <div class="divisor">♡ ♡ ♡</div>
+      <h2 class="script">Consideraciones</h2>
+      <div class="destacado">SOLO ADULTOS</div>
+      <p>Amamos a los niños, pero en esta ocasión hemos decidido celebrar este momento solo con adultos. Deseamos que esta decisión no les impida asistir a nuestra celebración.</p>
+      <p style="margin-top:16px;">En esta boda está permitido:</p>
+      <div class="reglas">
+        <p>¡Emocionarse!</p>
+        <p>¡Cantar hasta quedar afónico!</p>
+        <p>¡Bailar hasta que el cuerpo aguante!</p>
+      </div>
+      <div class="emoji-fiesta">🕺🎶🙌💃</div>
+    </section>
+
+    <!-- Cita + Galeria -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <div class="cita">"Más valen dos que uno... si uno cae el otro lo levanta... la cuerda de tres hilos no se rompe fácilmente."</div>
+      <div class="cita-ref">Eclesiastés 4:9-12</div>
+      <div class="galeria">
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-1.jpg</span><img src="assets/fotos/galeria-1.jpg" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-2.jpg</span><img src="assets/fotos/galeria-2.jpg" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-3.jpg</span><img src="assets/fotos/galeria-3.jpg" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-4.jpg</span><img src="assets/fotos/galeria-4.jpg" onerror="this.style.display='none'"></div>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section>
+      <div class="divisor">♡ ♡ ♡</div>
+      <h3 class="subtitulo">Confirma tu asistencia</h3>
+      <p>Por favor confírmanos antes del 11 de Octubre 2026</p>
+      <a class="btn-rsvp" id="rsvp-btn" href="#" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+    </section>
+
+    <!-- Cierre -->
+    <section id="cierre">
+      <div class="script" style="font-size:34px;">Osiris &amp; Jesús</div>
+      <p style="margin-top:14px;">Tu presencia es importante para nosotros, ¡te esperamos!</p>
+    </section>
+    <footer>Invitación digital hecha con cariño</footer>
+  </main>
+</div>
+
+<script>
+  // ---- Leer parámetros de la URL para personalizar por familia ----
+  const params = new URLSearchParams(window.location.search);
+  const familia = params.get('familia');
+  const cupos = params.get('cupos');
+
+  if (familia) {
+    document.getElementById('sobre-familia').textContent = familia;
+  }
+  if (cupos) {
+    document.getElementById('sobre-cupos').textContent = `Cupos reservados (${cupos})`;
+  }
+
+  document.getElementById('btn-sello').addEventListener('click', () => {
+    document.getElementById('sobre-screen').classList.add('abierto');
+    document.body.style.overflow = 'auto';
+  });
+  document.body.style.overflow = 'hidden';
+
+  // ---- Música ----
+  const audio = document.getElementById('bgMusic');
+  const playBtn = document.getElementById('play-btn');
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(()=>{});
+      playBtn.textContent = '❚❚';
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶';
+    }
+  });
+
+  // ---- Cuenta regresiva ----
+  const fechaBoda = new Date('2026-11-11T19:00:00');
+  function actualizarCuenta(){
+    const ahora = new Date();
+    let diff = fechaBoda - ahora;
+    if (diff < 0) diff = 0;
+    const dias = Math.floor(diff / (1000*60*60*24));
+    const horas = Math.floor((diff / (1000*60*60)) % 24);
+    const min = Math.floor((diff / (1000*60)) % 60);
+    const seg = Math.floor((diff / 1000) % 60);
+    document.getElementById('t-dias').textContent = String(dias).padStart(2,'0');
+    document.getElementById('t-horas').textContent = String(horas).padStart(2,'0');
+    document.getElementById('t-min').textContent = String(min).padStart(2,'0');
+    document.getElementById('t-seg').textContent = String(seg).padStart(2,'0');
+  }
+  actualizarCuenta();
+  setInterval(actualizarCuenta, 1000);
+
+  // ---- RSVP WhatsApp (reemplazar número) ----
+  const numeroWhatsApp = '52XXXXXXXXXX'; // TODO: poner número real con lada 52
+  const nombreFamiliaTexto = familia ? familia : '';
+  const mensaje = encodeURIComponent(`¡Hola! Confirmamos nuestra asistencia a la boda de Osiris & Jesús. Familia: ${nombreFamiliaTexto}`);
+  document.getElementById('rsvp-btn').href = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+</script>
+</body>
+</html>
