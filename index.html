@@ -531,9 +531,9 @@
           <button id="play-btn" aria-label="Reproducir música">▶</button>
           <span>Dale play a la música</span>
         </div>
-        <audio id="bgMusic" loop>
-          <source src="assets/audio/musica.mp3" type="audio/mpeg">
-        </audio>
+        <div id="yt-player-holder" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+          <div id="yt-player"></div>
+        </div>
       </div>
     </section>
 
@@ -739,16 +739,47 @@
   });
   document.body.style.overflow = 'hidden';
 
-  // ---- Música ----
-  const audio = document.getElementById('bgMusic');
+  // ---- Música (YouTube: "Jesús Eres Bienvenido" - Sary Pacheco) ----
+  const YT_VIDEO_ID = '-RfjCX_C1B0';
   const playBtn = document.getElementById('play-btn');
+  let ytPlayer = null;
+  let ytReady = false;
+  let wantsPlay = false;
+
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player('yt-player', {
+      videoId: YT_VIDEO_ID,
+      playerVars: { autoplay: 0, controls: 0 },
+      events: {
+        onReady: () => {
+          ytReady = true;
+          if (wantsPlay) ytPlayer.playVideo();
+        },
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.PLAYING) {
+            ytPlayer.setLoop && ytPlayer.setLoop(true);
+            playBtn.textContent = '❚❚';
+          } else if (e.data === YT.PlayerState.PAUSED) {
+            playBtn.textContent = '▶';
+          } else if (e.data === YT.PlayerState.ENDED) {
+            ytPlayer.playVideo();
+          }
+        }
+      }
+    });
+  };
+
   playBtn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play().catch(()=>{});
-      playBtn.textContent = '❚❚';
+    if (!ytReady) { wantsPlay = !wantsPlay; return; }
+    const state = ytPlayer.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+      ytPlayer.pauseVideo();
     } else {
-      audio.pause();
-      playBtn.textContent = '▶';
+      ytPlayer.playVideo();
     }
   });
 
