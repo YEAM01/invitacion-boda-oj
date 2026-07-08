@@ -91,21 +91,33 @@
   #sobre-screen.flap-open .sobre-solapa{
     transform:rotateX(180deg);
   }
+  .sobre-titulo,
+  #sobre-familia,
+  #sobre-cupos,
+  .sello small{
+    transition:opacity .4s ease;
+  }
+  #sobre-screen.flap-open .sobre-titulo,
+  #sobre-screen.flap-open #sobre-familia,
+  #sobre-screen.flap-open #sobre-cupos,
+  #sobre-screen.flap-open .sello small{
+    opacity:0;
+  }
   .tarjeta-revelada{
     position:absolute;
     top:50%;
     left:50%;
-    transform:translate(-50%,-40%) scale(.9);
-    width:190px;
+    transform:translate(-50%,-50%) scale(.9);
+    width:220px;
     opacity:0;
     transition:opacity .7s ease .55s, transform .7s ease .55s;
-    z-index:10;
+    z-index:20;
     pointer-events:none;
     text-align:center;
   }
   #sobre-screen.flap-open .tarjeta-revelada{
     opacity:1;
-    transform:translate(-50%,-62%) scale(1);
+    transform:translate(-50%,-50%) scale(1);
   }
   .tarjeta-revelada img{
     width:130px;height:130px;
@@ -554,13 +566,13 @@
       <div class="sobre-cuerpo"></div>
       <div class="sello" id="btn-sello">O&amp;J<small>Da click en el sello<br>para abrir</small></div>
       <div class="sobre-solapa"></div>
-      <div class="tarjeta-revelada">
-        <img src="assets/fotos/galeria-1.jpg?v=3" alt="Osiris y Jesús">
-        <div class="tr-texto">¡Nos vamos a casar!</div>
-      </div>
     </div>
     <div id="sobre-familia">Estimados invitados</div>
     <div id="sobre-cupos"></div>
+    <div class="tarjeta-revelada">
+      <img src="assets/fotos/galeria-1.jpg?v=3" alt="Osiris y Jesús">
+      <div class="tr-texto">¡Nos vamos a casar!</div>
+    </div>
   </div>
 
   <!-- ===================== CONTENIDO ===================== -->
