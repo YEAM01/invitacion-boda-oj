@@ -476,7 +476,8 @@
   .no-color{font-size:11px;color:var(--cafe-suave);text-transform:uppercase;letter-spacing:1px;}
 
   /* Regalos */
-  .regalo-emoji{font-size:40px;margin-bottom:14px;}
+  .regalo-emoji{margin-bottom:14px;display:flex;justify-content:center;}
+  .regalo-emoji svg{width:48px;height:48px;}
   .tienda{
     font-family:'Playfair Display',serif;
     font-size:20px;
@@ -625,9 +626,14 @@
       <div class="grupo-padres">
         <h4>Padres de la novia</h4>
         <div class="persona-icono">
-          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M50 14c-14 0-22 12-22 24 0 8 4 14 8 18-10 6-16 16-16 32h60c0-16-6-26-16-32 4-4 8-10 8-18 0-12-8-24-22-24z"/>
-            <circle cx="50" cy="34" r="12"/>
+          <svg viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 20c0-9 5-15 12-15s12 6 12 15"/>
+            <path d="M14 30c0-14 6-24 18-24s18 10 18 24"/>
+            <path d="M18 26c-3 6-4 14-2 22M46 26c3 6 4 14 2 22"/>
+            <path d="M22 26c1 8 1 16-1 24M42 26c-1 8-1 16 1 24"/>
+            <circle cx="26" cy="27" r="1.6" fill="#000" stroke="none"/>
+            <circle cx="38" cy="27" r="1.6" fill="#000" stroke="none"/>
+            <path d="M27 34c2 1.5 8 1.5 10 0"/>
           </svg>
         </div>
         <p>Norma Angélica Arreola Medina</p>
@@ -636,10 +642,14 @@
       <div class="grupo-padres">
         <h4>Padres del novio</h4>
         <div class="persona-icono">
-          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="50" cy="28" r="16"/>
-            <path d="M22 88c0-20 12-34 28-34s28 14 28 34"/>
-            <path d="M50 54 L42 64 L50 74 L58 64 Z"/>
+          <svg viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 30c0-11 6-19 14-19s14 8 14 19c0 3-1 5-2 7"/>
+            <path d="M18 30c-1 2-2 4-2 7"/>
+            <circle cx="27" cy="28" r="1.6" fill="#000" stroke="none"/>
+            <circle cx="37" cy="28" r="1.6" fill="#000" stroke="none"/>
+            <path d="M27 35c2 1.5 8 1.5 10 0"/>
+            <path d="M32 44v4"/>
+            <path d="M24 50l8-4 8 4-8 4z"/>
           </svg>
         </div>
         <p>Carlos Alberto Cárdenas Hernández</p>
@@ -649,9 +659,11 @@
       <div class="grupo-padres">
         <h4>Madrina de boda</h4>
         <div class="persona-icono">
-          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="4">
-            <circle cx="38" cy="58" r="22"/>
-            <circle cx="62" cy="58" r="22"/>
+          <svg viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="25" cy="38" r="13"/>
+            <circle cx="39" cy="38" r="13"/>
+            <path d="M40 14l1.5 3.5L45 19l-3.5 1.5L40 24l-1.5-3.5L35 19l3.5-1.5z"/>
+            <path d="M50 20l1 2.4L53.4 23.4 51 24.4 50 27l-1-2.6-2.4-1L49 22.4z"/>
           </svg>
         </div>
         <p>Esmeralda Arreola</p>
@@ -745,7 +757,16 @@
     <section>
       <div class="divisor">♡ ♡ ♡</div>
       <h2 class="script">Mesa de regalos</h2>
-      <div class="regalo-emoji">🎁</div>
+      <div class="regalo-emoji">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="12" y="26" width="40" height="30" rx="2"/>
+          <path d="M12 36h40"/>
+          <path d="M32 26v30"/>
+          <path d="M32 26c-4-8-16-8-16 0 4 0 12 0 16 0z"/>
+          <path d="M32 26c4-8 16-8 16 0-4 0-12 0-16 0z"/>
+          <path d="M32 44c-3-3-8-3-8 1s5 6 8 3c3 3 8 1 8-3s-5-4-8-1z"/>
+        </svg>
+      </div>
       <p>Su presencia es el mejor regalo que podemos recibir, sin embargo, si desean hacernos un obsequio adicional les dejamos algunas sugerencias y les agradecemos de antemano por su generosidad.</p>
       <div class="tienda">Liverpool</div>
       <div class="num-evento">No. de evento: (pendiente de agregar)</div>
