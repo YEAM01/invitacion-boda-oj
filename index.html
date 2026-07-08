@@ -57,27 +57,36 @@
   }
   .sobre{
     position:relative;
-    width:260px;
-    height:180px;
-    margin-bottom:28px;
+    width:270px;
+    height:185px;
+    margin-bottom:30px;
+    filter:drop-shadow(0 14px 24px rgba(74,63,53,.22));
   }
   .sobre-cuerpo{
     position:absolute;
     inset:0;
-    background:#fffdf8;
+    background:linear-gradient(165deg,#fffdf9,#f7f0e2);
     border:1px solid var(--dorado-claro);
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    border-radius:3px;
+  }
+  .sobre-cuerpo::before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid rgba(176,141,87,.35);
+    pointer-events:none;
   }
   .sobre-solapa{
     position:absolute;
     top:0;left:0;right:0;
     height:0;
-    border-left:130px solid transparent;
-    border-right:130px solid transparent;
-    border-top:95px solid #f3ecdd;
+    border-left:135px solid transparent;
+    border-right:135px solid transparent;
+    border-top:98px solid #efe4cd;
     transform-origin:top;
     transition:transform 1.1s ease;
     z-index:3;
+    filter:drop-shadow(0 2px 3px rgba(74,63,53,.12));
   }
   #sobre-screen.flap-open .sobre-solapa{
     transform:rotateX(180deg);
@@ -114,32 +123,32 @@
   }
   .sello{
     position:absolute;
-    top:60px;left:50%;
-    transform:translateX(-50%);
-    width:58px;height:58px;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #e3c583, var(--dorado) 70%);
-    color:#fff;
+    top:62px;left:50%;
+    transform:translateX(-50%) rotate(-4deg);
+    width:66px;height:66px;
+    border-radius:42% 58% 63% 37% / 53% 42% 58% 47%;
+    background:radial-gradient(circle at 32% 26%, #e9cf94, var(--dorado) 58%, #8a6a3a 100%);
+    color:#fff8ea;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-family:'Playfair Display',serif;
-    font-weight:700;
-    font-size:16px;
-    letter-spacing:1px;
+    font-family:'Parisienne',cursive;
+    font-size:28px;
+    line-height:1;
     cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,.35);
+    box-shadow:0 5px 12px rgba(74,63,53,.4), inset 0 2px 3px rgba(255,255,255,.45), inset 0 -4px 7px rgba(0,0,0,.3);
     z-index:5;
-    border:2px solid #fff8ea;
-    animation:pulso 2.2s infinite;
+    animation:pulso 2.4s infinite;
   }
   @keyframes pulso{
-    0%,100%{box-shadow:0 4px 10px rgba(0,0,0,.35);}
-    50%{box-shadow:0 4px 18px rgba(176,141,87,.65);}
+    0%,100%{box-shadow:0 5px 12px rgba(74,63,53,.4), inset 0 2px 3px rgba(255,255,255,.45), inset 0 -4px 7px rgba(0,0,0,.3);}
+    50%{box-shadow:0 6px 20px rgba(176,141,87,.65), inset 0 2px 3px rgba(255,255,255,.45), inset 0 -4px 7px rgba(0,0,0,.3);}
   }
   .sello small{
     position:absolute;
-    bottom:-26px;
+    bottom:-28px;
+    left:50%;
+    transform:translateX(-50%) rotate(4deg);
     font-family:'Poppins',sans-serif;
     font-size:9px;
     font-weight:400;
@@ -326,8 +335,13 @@
 
   /* Padres y padrinos */
   .persona-icono{
-    font-size:34px;
-    margin-bottom:6px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:center;
+  }
+  .persona-icono svg{
+    width:42px;
+    height:42px;
   }
   .grupo-padres{
     margin-bottom:26px;
@@ -598,20 +612,36 @@
 
       <div class="grupo-padres">
         <h4>Padres de la novia</h4>
-        <div class="persona-icono">👰</div>
+        <div class="persona-icono">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M50 14c-14 0-22 12-22 24 0 8 4 14 8 18-10 6-16 16-16 32h60c0-16-6-26-16-32 4-4 8-10 8-18 0-12-8-24-22-24z"/>
+            <circle cx="50" cy="34" r="12"/>
+          </svg>
+        </div>
         <p>Norma Angélica Arreola Medina</p>
       </div>
 
       <div class="grupo-padres">
         <h4>Padres del novio</h4>
-        <div class="persona-icono">🤵</div>
+        <div class="persona-icono">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="50" cy="28" r="16"/>
+            <path d="M22 88c0-20 12-34 28-34s28 14 28 34"/>
+            <path d="M50 54 L42 64 L50 74 L58 64 Z"/>
+          </svg>
+        </div>
         <p>Carlos Alberto Cárdenas Hernández</p>
         <p>Juana Isabel García Armendáriz</p>
       </div>
 
       <div class="grupo-padres">
         <h4>Madrina de boda</h4>
-        <div class="persona-icono">💍</div>
+        <div class="persona-icono">
+          <svg viewBox="0 0 100 100" fill="none" stroke="#4a3f35" stroke-width="4">
+            <circle cx="38" cy="58" r="22"/>
+            <circle cx="62" cy="58" r="22"/>
+          </svg>
+        </div>
         <p>Esmeralda Arreola</p>
       </div>
     </section>
