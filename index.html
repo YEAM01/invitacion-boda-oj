@@ -522,7 +522,7 @@
     <section id="portada">
       <div class="foto-slot" id="portada-foto">
         <span class="ph-label">Foto de portada<br>(assets/fotos/portada.jpg)</span>
-        <img src="assets/fotos/portada.jpg?v=2" alt="Osiris y Jesús" onerror="this.style.display='none'">
+        <img src="assets/fotos/portada.jpg?v=3" alt="Osiris y Jesús" onerror="this.style.display='none'">
       </div>
       <div class="portada-nombres">
         <div class="script">Osiris &amp; Jesús</div>
@@ -591,7 +591,7 @@
         <h4>Ceremonia religiosa</h4>
         <div class="foto-slot foto-lugar">
           <span class="ph-label">Foto del jardín / iglesia<br>(assets/fotos/ceremonia.jpg)</span>
-          <img src="assets/fotos/ceremonia.jpg?v=2" alt="Ceremonia" onerror="this.style.display='none'">
+          <img src="assets/fotos/ceremonia.jpg?v=3" alt="Ceremonia" onerror="this.style.display='none'">
         </div>
         <div class="nombre-lugar">Jardín Hacienda Figueroa</div>
         <div class="direccion">Morelia, Mich. (dirección de ejemplo — actualizar)</div>
@@ -603,7 +603,7 @@
         <h4>Recepción</h4>
         <div class="foto-slot foto-lugar">
           <span class="ph-label">Foto del salón<br>(assets/fotos/recepcion.jpg)</span>
-          <img src="assets/fotos/recepcion.jpg?v=2" alt="Recepción" onerror="this.style.display='none'">
+          <img src="assets/fotos/recepcion.jpg?v=3" alt="Recepción" onerror="this.style.display='none'">
         </div>
         <div class="nombre-lugar">Salón Hacienda Figueroa</div>
         <div class="direccion">Morelia, Mich. (dirección de ejemplo — actualizar)</div>
@@ -696,10 +696,10 @@
       <div class="cita">"Más valen dos que uno... si uno cae el otro lo levanta... la cuerda de tres hilos no se rompe fácilmente."</div>
       <div class="cita-ref">Eclesiastés 4:9-12</div>
       <div class="galeria">
-        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-1.jpg</span><img src="assets/fotos/galeria-1.jpg?v=2" onerror="this.style.display='none'"></div>
-        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-2.jpg</span><img src="assets/fotos/galeria-2.jpg?v=2" onerror="this.style.display='none'"></div>
-        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-3.jpg</span><img src="assets/fotos/galeria-3.jpg?v=2" onerror="this.style.display='none'"></div>
-        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-4.jpg</span><img src="assets/fotos/galeria-4.jpg?v=2" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-1.jpg</span><img src="assets/fotos/galeria-1.jpg?v=3" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-2.jpg</span><img src="assets/fotos/galeria-2.jpg?v=3" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-3.jpg</span><img src="assets/fotos/galeria-3.jpg?v=3" onerror="this.style.display='none'"></div>
+        <div class="foto-slot"><span class="ph-label">assets/fotos/galeria-4.jpeg</span><img src="assets/fotos/galeria-4.jpg?v=3" onerror="this.style.display='none'"></div>
       </div>
     </section>
 
@@ -735,18 +735,18 @@
 
   // ---- Música (YouTube: "Jesús Eres Bienvenido" - Sary Pacheco, desde el min 31) ----
   const YT_VIDEO_ID = '-RfjCX_C1B0';
-  const YT_START_SECONDS = 31 * 60;
+  const YT_START_SECONDS = 30 * 60;
   const playBtn = document.getElementById('play-btn');
   let ytPlayer = null;
   let ytReady = false;
-  let wantsPlay = false;
+  let wantsSound = false;
 
-  function iniciarMusica() {
+  function activarSonido() {
     if (ytReady) {
-      ytPlayer.seekTo(YT_START_SECONDS, true);
+      ytPlayer.unMute();
       ytPlayer.playVideo();
     } else {
-      wantsPlay = true;
+      wantsSound = true;
     }
   }
 
@@ -757,18 +757,21 @@
   window.onYouTubeIframeAPIReady = function () {
     ytPlayer = new YT.Player('yt-player', {
       videoId: YT_VIDEO_ID,
-      playerVars: { autoplay: 0, controls: 0, start: YT_START_SECONDS },
+      playerVars: { autoplay: 1, mute: 1, controls: 0, start: YT_START_SECONDS },
       events: {
         onReady: () => {
           ytReady = true;
-          if (wantsPlay) {
-            ytPlayer.seekTo(YT_START_SECONDS, true);
+          const intentarPlay = () => {
             ytPlayer.playVideo();
-          }
+            if (wantsSound) ytPlayer.unMute();
+          };
+          intentarPlay();
+          setTimeout(intentarPlay, 400);
+          setTimeout(intentarPlay, 1000);
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.PLAYING) {
-            playBtn.textContent = '❚❚';
+            playBtn.textContent = ytPlayer.isMuted() ? '▶' : '❚❚';
           } else if (e.data === YT.PlayerState.PAUSED) {
             playBtn.textContent = '▶';
           } else if (e.data === YT.PlayerState.ENDED) {
@@ -781,20 +784,19 @@
   };
 
   playBtn.addEventListener('click', () => {
-    if (!ytReady) { wantsPlay = !wantsPlay; return; }
-    const state = ytPlayer.getPlayerState();
-    if (state === YT.PlayerState.PLAYING) {
-      ytPlayer.pauseVideo();
-    } else {
-      ytPlayer.seekTo(YT_START_SECONDS, true);
+    if (!ytReady) { wantsSound = true; return; }
+    if (ytPlayer.isMuted() || ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+      ytPlayer.unMute();
       ytPlayer.playVideo();
+    } else {
+      ytPlayer.pauseVideo();
     }
   });
 
   document.getElementById('btn-sello').addEventListener('click', () => {
     document.getElementById('sobre-screen').classList.add('abierto');
     document.body.style.overflow = 'auto';
-    iniciarMusica();
+    activarSonido();
   });
   document.body.style.overflow = 'hidden';
 
